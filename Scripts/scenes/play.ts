@@ -294,8 +294,8 @@ module scenes {
 
             // initialize  score and lives values
             this.scoreValue = 0;
-            this.livesValue = 1;
-            this.bonusValue = 9999;;
+            this.livesValue = 5;
+            this.bonusValue = 9999;
         }
         /**
          * This method sets up the scoreboard for the scene
@@ -1066,6 +1066,9 @@ module scenes {
                 this.velocity = new Vector3();
                 this.bonusValue--;
                 this.bonusLabel.text = "Bonus: " + this.bonusValue;
+                this.remove(this.ground);
+                this.ground.position.y += 0.01;
+                this.add(this.ground);
 
                 var time: number = performance.now();
                 var delta: number = (time - this.prevTime) / 1000;
@@ -1086,7 +1089,7 @@ module scenes {
                     }
                     if (this.keyboardControls.jump) {
                         this.velocity.y += 4000.0 * delta;
-                        if (this.player.position.y > 100) {
+                        if (this.player.position.y > 10) {
                             this.isGrounded = false;
                             createjs.Sound.play("jump");
                         }
@@ -1205,7 +1208,8 @@ module scenes {
                 if (event.name === "Lava floor") {
                     createjs.Sound.play("lava");
                     console.log("Booped ground");
-                
+                    this.livesValue--;
+
                     if (this.livesValue <= 0) {
                         //Game over yeaaAAAHHH H H H H HH
                         document.exitPointerLock();
@@ -1216,200 +1220,203 @@ module scenes {
                     }
                     else {
                         //Reset player, update lives
-                        this.livesValue--;
+                        this.remove(this.ground);
+                        this.ground.position.y = -50;
+                        this.add(this.ground);
                         this.livesLabel.text = "LIVES: " + this.livesValue;
                         this.remove(this.player);
                         this.player.position.set(0, 10, 10);
+                        this.player.rotation.set(0, 0, 0);
                         this.add(this.player);
                     }
                 }
-                    if (event.name === "Road1") {
-                        createjs.Sound.play("walk");
-                        console.log("Booped Road1");
-                        this.isGrounded = true;
-                    }
+                if (event.name === "Road1") {
+                    createjs.Sound.play("walk");
+                    console.log("Booped Road1");
+                    this.isGrounded = true;
+                }
 
-                    if (event.name === "Road2") {
-                        console.log("Booped Road2");
-                        this.isGrounded = true;
-                    }
+                if (event.name === "Road2") {
+                    console.log("Booped Road2");
+                    this.isGrounded = true;
+                }
 
-                    if (event.name === "Road3") {
-                        console.log("Booped Road3");
-                        this.isGrounded = true;
-                    }
+                if (event.name === "Road3") {
+                    console.log("Booped Road3");
+                    this.isGrounded = true;
+                }
 
-                    if (event.name === "Road4") {
-                        console.log("Booped Road4");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road5") {
-                        console.log("Booped Road5");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road6") {
-                        console.log("Booped Road6");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road7") {
-                        console.log("Booped Road7");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road8") {
-                        console.log("Booped Road8");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road9") {
-                        console.log("Booped Road9");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road10") {
-                        console.log("Booped Road10");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road11") {
-                        console.log("Booped Road11");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road12") {
-                        console.log("Booped Road12");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road13") {
-                        console.log("Booped Road13");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road14") {
-                        console.log("Booped Road14");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road15") {
-                        console.log("Booped Road15");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road16") {
-                        console.log("Booped Road16");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road17") {
-                        console.log("Booped Road17");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road18") {
-                        console.log("Booped Road18");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road19") {
-                        console.log("Booped Road19");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road20") {
-                        console.log("Booped Road20");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road21") {
-                        console.log("Booped Road21");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road22") {
-                        console.log("Booped Road22");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road23") {
-                        console.log("Booped Road23");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road24") {
-                        console.log("Booped Road24");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road25") {
-                        console.log("Booped Road25");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road26") {
-                        console.log("Booped Road26");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road27") {
-                        console.log("Booped Road27");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road28") {
-                        console.log("Booped Road28");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road29") {
-                        console.log("Booped Road29");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road30") {
-                        console.log("Booped Road30");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road31") {
-                        console.log("Booped Road31");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Road32") {
-                        console.log("Booped Road32");
-                        this.isGrounded = true;
-                    }
+                if (event.name === "Road4") {
+                    console.log("Booped Road4");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road5") {
+                    console.log("Booped Road5");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road6") {
+                    console.log("Booped Road6");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road7") {
+                    console.log("Booped Road7");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road8") {
+                    console.log("Booped Road8");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road9") {
+                    console.log("Booped Road9");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road10") {
+                    console.log("Booped Road10");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road11") {
+                    console.log("Booped Road11");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road12") {
+                    console.log("Booped Road12");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road13") {
+                    console.log("Booped Road13");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road14") {
+                    console.log("Booped Road14");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road15") {
+                    console.log("Booped Road15");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road16") {
+                    console.log("Booped Road16");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road17") {
+                    console.log("Booped Road17");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road18") {
+                    console.log("Booped Road18");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road19") {
+                    console.log("Booped Road19");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road20") {
+                    console.log("Booped Road20");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road21") {
+                    console.log("Booped Road21");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road22") {
+                    console.log("Booped Road22");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road23") {
+                    console.log("Booped Road23");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road24") {
+                    console.log("Booped Road24");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road25") {
+                    console.log("Booped Road25");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road26") {
+                    console.log("Booped Road26");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road27") {
+                    console.log("Booped Road27");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road28") {
+                    console.log("Booped Road28");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road29") {
+                    console.log("Booped Road29");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road30") {
+                    console.log("Booped Road30");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road31") {
+                    console.log("Booped Road31");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Road32") {
+                    console.log("Booped Road32");
+                    this.isGrounded = true;
+                }
 
-                    if (event.name === "Platform1") {
-                        console.log("Booped Platform 1");
-                        this.isGrounded = true;
-                        createjs.Sound.play("land");
-                    }
-                    if (event.name === "Platform2") {
-                        console.log("Booped Platform 2");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Platform3") {
-                        console.log("Booped Platform 3");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Platform4") {
-                        console.log("Booped Platform 4");
-                        this.isGrounded = true;
-                    }
+                if (event.name === "Platform1") {
+                    console.log("Booped Platform 1");
+                    this.isGrounded = true;
+                    createjs.Sound.play("land");
+                }
+                if (event.name === "Platform2") {
+                    console.log("Booped Platform 2");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Platform3") {
+                    console.log("Booped Platform 3");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Platform4") {
+                    console.log("Booped Platform 4");
+                    this.isGrounded = true;
+                }
 
-                    if (event.name === "Platform5") {
-                        console.log("Booped Platform 5");
-                        this.isGrounded = true;
-                    }
-                    if (event.name === "Door1") {
-                        createjs.Sound.play("door");
-                        console.log("Booped Door 1");
-                        currentScene = config.Scene.OVER;
-                        changeScene();
-                        this.scoreValue += this.bonusValue;
-                        this.scoreLabel.text = "Score: " + this.scoreValue;
-                        
+                if (event.name === "Platform5") {
+                    console.log("Booped Platform 5");
+                    this.isGrounded = true;
+                }
+                if (event.name === "Door1") {
+                    createjs.Sound.play("door");
+                    console.log("Booped Door 1");
+                    currentScene = config.Scene.OVER;
+                    changeScene();
+                    this.scoreValue += this.bonusValue;
+                    this.scoreLabel.text = "Score: " + this.scoreValue;
 
-                    }
-                    if (event.name === "Coin1") {
-                        createjs.Sound.play("coin");
-                        scene.remove(event);
-                        this.scoreValue += 100;
-                        this.scoreLabel.text = "Score: " + this.scoreValue;
-                    }
-                    if (event.name === "Coin2") {
-                        createjs.Sound.play("coin");
-                        scene.remove(event);
-                        this.scoreValue += 100;
-                        this.scoreLabel.text = "Score: " + this.scoreValue;
-                    }
-                    if (event.name === "Coin3") {
-                        createjs.Sound.play("coin");
-                        scene.remove(event);
-                        this.scoreValue += 100;
-                        this.scoreLabel.text = "Score: " + this.scoreValue;
-                    }
-                });
-            
-            
-            
+
+                }
+                if (event.name === "Coin1") {
+                    createjs.Sound.play("coin");
+                    scene.remove(event);
+                    this.scoreValue += 100;
+                    this.scoreLabel.text = "Score: " + this.scoreValue;
+                }
+                if (event.name === "Coin2") {
+                    createjs.Sound.play("coin");
+                    scene.remove(event);
+                    this.scoreValue += 100;
+                    this.scoreLabel.text = "Score: " + this.scoreValue;
+                }
+                if (event.name === "Coin3") {
+                    createjs.Sound.play("coin");
+                    scene.remove(event);
+                    this.scoreValue += 100;
+                    this.scoreLabel.text = "Score: " + this.scoreValue;
+                }
+            });
+
+
+
 
             // create parent-child relationship with camera and player
             this.player.add(camera);
@@ -1440,7 +1447,6 @@ module scenes {
          * @returns void
          */
         public update(): void {
-
 
 
             this.checkControls();

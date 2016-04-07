@@ -68,9 +68,8 @@ var scenes;
             this.mouseControls = new objects.MouseControls();
             // initialize  score and lives values
             this.scoreValue = 0;
-            this.livesValue = 1;
+            this.livesValue = 5;
             this.bonusValue = 9999;
-            ;
         };
         /**
          * This method sets up the scoreboard for the scene
@@ -747,6 +746,9 @@ var scenes;
                 this.velocity = new Vector3();
                 this.bonusValue--;
                 this.bonusLabel.text = "Bonus: " + this.bonusValue;
+                this.remove(this.ground);
+                this.ground.position.y += 0.01;
+                this.add(this.ground);
                 var time = performance.now();
                 var delta = (time - this.prevTime) / 1000;
                 if (this.isGrounded) {
@@ -765,7 +767,7 @@ var scenes;
                     }
                     if (this.keyboardControls.jump) {
                         this.velocity.y += 4000.0 * delta;
-                        if (this.player.position.y > 100) {
+                        if (this.player.position.y > 10) {
                             this.isGrounded = false;
                             createjs.Sound.play("jump");
                         }
@@ -852,6 +854,7 @@ var scenes;
                 if (event.name === "Lava floor") {
                     createjs.Sound.play("lava");
                     console.log("Booped ground");
+                    _this.livesValue--;
                     if (_this.livesValue <= 0) {
                         //Game over yeaaAAAHHH H H H H HH
                         document.exitPointerLock();
@@ -862,10 +865,13 @@ var scenes;
                     }
                     else {
                         //Reset player, update lives
-                        _this.livesValue--;
+                        _this.remove(_this.ground);
+                        _this.ground.position.y = -50;
+                        _this.add(_this.ground);
                         _this.livesLabel.text = "LIVES: " + _this.livesValue;
                         _this.remove(_this.player);
                         _this.player.position.set(0, 10, 10);
+                        _this.player.rotation.set(0, 0, 0);
                         _this.add(_this.player);
                     }
                 }
