@@ -19,6 +19,8 @@ module scenes {
 
         private _blocker: HTMLElement;
         private _stage: createjs.Stage;
+        private _scoreLabel: createjs.Text;
+        private _highScoreLabel: createjs.Text;
         private _gameOverLabel: createjs.Text;
         private _restartButton: createjs.Bitmap;
 
@@ -51,7 +53,6 @@ module scenes {
             // Create to HTMLElements
             this._blocker = document.getElementById("blocker");
             this._blocker.style.display = "none";
-
             // setup canvas for menu scene
             this._setupCanvas();
             // setup a stage on the canvas
@@ -77,6 +78,26 @@ module scenes {
             this._gameOverLabel.x = config.Screen.WIDTH * 0.5;
             this._gameOverLabel.y = config.Screen.HEIGHT * 0.5;
             this._stage.addChild(this._gameOverLabel);
+
+            this._scoreLabel = new createjs.Text(
+                "Your Score: " + scoreValue,
+                "40px Consolas",
+                "#000000");
+            this._scoreLabel.regX = this._scoreLabel.getMeasuredWidth() * 0.5;
+            this._scoreLabel.regY = this._scoreLabel.getMeasuredLineHeight() * 0.5;
+            this._scoreLabel.x = config.Screen.WIDTH * 0.5;
+            this._scoreLabel.y = config.Screen.HEIGHT * 0.5;
+            this._stage.addChild(this._scoreLabel);
+
+            this._highScoreLabel = new createjs.Text(
+                "High Score: " + highestScore,
+                "40px Consolas",
+                "#000000");
+            this._highScoreLabel.regX = this._highScoreLabel.getMeasuredWidth() * 0.5;
+            this._highScoreLabel.regY = this._highScoreLabel.getMeasuredLineHeight() * 0.5;
+            this._highScoreLabel.x = config.Screen.WIDTH * 0.5;
+            this._highScoreLabel.y = (config.Screen.HEIGHT * 0.5) + 50;
+            this._stage.addChild(this._highScoreLabel);
 
             this._restartButton = new createjs.Bitmap(assets.getResult("RestartButton"));
             this._restartButton.regX = this._restartButton.getBounds().width * 0.5;

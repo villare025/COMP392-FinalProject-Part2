@@ -67,9 +67,9 @@ var scenes;
             this.keyboardControls = new objects.KeyboardControls();
             this.mouseControls = new objects.MouseControls();
             // initialize  score and lives values
-            this.scoreValue = 0;
-            this.livesValue = 5;
-            this.bonusValue = 9999;
+            scoreValue = 0;
+            livesValue = 5;
+            bonusValue = 9999;
         };
         /**
          * This method sets up the scoreboard for the scene
@@ -79,19 +79,19 @@ var scenes;
          */
         Play.prototype.setupScoreboard = function () {
             // Add Lives Label
-            this.livesLabel = new createjs.Text("LIVES: " + this.livesValue, "40px Consolas", "#ffffff");
+            this.livesLabel = new createjs.Text("LIVES: " + livesValue, "40px Consolas", "#ffffff");
             this.livesLabel.x = config.Screen.WIDTH * 0.45;
             this.livesLabel.y = (config.Screen.HEIGHT * 0.15) * 0.15;
             this.stage.addChild(this.livesLabel);
             console.log("Added Lives Label to stage");
             // Add Score Label
-            this.scoreLabel = new createjs.Text("SCORE: " + this.scoreValue, "40px Consolas", "#ffffff");
+            this.scoreLabel = new createjs.Text("SCORE: " + scoreValue, "40px Consolas", "#ffffff");
             this.scoreLabel.x = config.Screen.WIDTH * 0.1;
             this.scoreLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
             this.stage.addChild(this.scoreLabel);
             console.log("Added Score Label to stage");
             //Add Bonus Label
-            this.bonusLabel = new createjs.Text("Bonus: " + this.bonusValue, "40px Consolas", "#ffffff");
+            this.bonusLabel = new createjs.Text("Bonus: " + bonusValue, "40px Consolas", "#ffffff");
             this.bonusLabel.x = config.Screen.WIDTH * 0.8;
             this.bonusLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
             this.stage.addChild(this.bonusLabel);
@@ -706,7 +706,7 @@ var scenes;
                 this.blocker.style.display = 'none';
             }
             else {
-                if (this.livesValue <= 0) {
+                if (livesValue <= 0) {
                     this.blocker.style.display = 'none';
                     this.keyboardControls.enabled = false;
                     this.mouseControls.enabled = false;
@@ -753,8 +753,8 @@ var scenes;
         Play.prototype.checkControls = function () {
             if (this.keyboardControls.enabled) {
                 this.velocity = new Vector3();
-                this.bonusValue--;
-                this.bonusLabel.text = "Bonus: " + this.bonusValue;
+                bonusValue--;
+                this.bonusLabel.text = "Bonus: " + bonusValue;
                 this.remove(this.ground);
                 this.ground.position.y += 0.01;
                 this.add(this.ground);
@@ -874,8 +874,8 @@ var scenes;
                 if (event.name === "Lava floor") {
                     createjs.Sound.play("lava");
                     console.log("Booped ground");
-                    _this.livesValue--;
-                    if (_this.livesValue <= 0) {
+                    livesValue--;
+                    if (livesValue <= 0) {
                         //Game over yeaaAAAHHH H H H H HH
                         document.exitPointerLock();
                         _this.children = []; //Clean up children objects
@@ -888,7 +888,7 @@ var scenes;
                         _this.remove(_this.ground);
                         _this.ground.position.y = -50;
                         _this.add(_this.ground);
-                        _this.livesLabel.text = "LIVES: " + _this.livesValue;
+                        _this.livesLabel.text = "LIVES: " + livesValue;
                         _this.remove(_this.player);
                         _this.player.position.set(0, 10, 10);
                         _this.player.rotation.set(0, 0, 0);
@@ -1048,16 +1048,16 @@ var scenes;
                 if (event.name === "Door1") {
                     createjs.Sound.play("door");
                     console.log("Booped Door 1");
-                    currentScene = config.Scene.OVER;
+                    currentScene = config.Scene.PLAY2;
                     changeScene();
-                    _this.scoreValue += _this.bonusValue;
-                    _this.scoreLabel.text = "Score: " + _this.scoreValue;
+                    scoreValue += bonusValue;
+                    _this.scoreLabel.text = "Score: " + scoreValue;
                 }
                 if (event.name === "Coin") {
                     createjs.Sound.play("coin");
                     scene.remove(event);
-                    _this.scoreValue += 100;
-                    _this.scoreLabel.text = "Score: " + _this.scoreValue;
+                    scoreValue += 100;
+                    _this.scoreLabel.text = "Score: " + scoreValue;
                 }
             });
             // create parent-child relationship with camera and player

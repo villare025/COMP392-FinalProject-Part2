@@ -52,10 +52,7 @@ module scenes {
         private stage: createjs.Stage;
         private scoreLabel: createjs.Text;
         private livesLabel: createjs.Text;
-        private scoreValue: number;
-        private livesValue: number;
         private bonusLabel: createjs.Text;
-        private bonusValue: number;
 
         //Coin
         private coinLoader: any;
@@ -294,9 +291,9 @@ module scenes {
             this.mouseControls = new objects.MouseControls()
 
             // initialize  score and lives values
-            this.scoreValue = 0;
-            this.livesValue = 5;
-            this.bonusValue = 9999;
+            scoreValue = 0;
+            livesValue = 5;
+            bonusValue = 9999;
         }
         /**
          * This method sets up the scoreboard for the scene
@@ -308,7 +305,7 @@ module scenes {
 
             // Add Lives Label
             this.livesLabel = new createjs.Text(
-                "LIVES: " + this.livesValue,
+                "LIVES: " + livesValue,
                 "40px Consolas",
                 "#ffffff"
             );
@@ -319,7 +316,7 @@ module scenes {
 
             // Add Score Label
             this.scoreLabel = new createjs.Text(
-                "SCORE: " + this.scoreValue,
+                "SCORE: " + scoreValue,
                 "40px Consolas",
                 "#ffffff"
             );
@@ -330,7 +327,7 @@ module scenes {
 
             //Add Bonus Label
             this.bonusLabel = new createjs.Text(
-                "Bonus: " + this.bonusValue,
+                "Bonus: " + bonusValue,
                 "40px Consolas",
                 "#ffffff"
             );
@@ -1025,7 +1022,7 @@ module scenes {
                 this.mouseControls.enabled = true;
                 this.blocker.style.display = 'none';
             } else {
-                if (this.livesValue <= 0) {
+                if (livesValue <= 0) {
                     this.blocker.style.display = 'none';
                     this.keyboardControls.enabled = false;
                     this.mouseControls.enabled = false;
@@ -1077,8 +1074,8 @@ module scenes {
         private checkControls(): void {
             if (this.keyboardControls.enabled) {
                 this.velocity = new Vector3();
-                this.bonusValue--;
-                this.bonusLabel.text = "Bonus: " + this.bonusValue;
+                bonusValue--;
+                this.bonusLabel.text = "Bonus: " + bonusValue;
                 this.remove(this.ground);
                 this.ground.position.y += 0.01;
                 this.add(this.ground);
@@ -1106,9 +1103,9 @@ module scenes {
                             this.isGrounded = false;
                             createjs.Sound.play("jump");
                         }
-                    if (this.player.position.y < 0) {
-                        this.isGrounded = false;
-                    }
+                        if (this.player.position.y < 0) {
+                            this.isGrounded = false;
+                        }
                     }
 
                     this.player.setDamping(0.7, 0.1);
@@ -1232,9 +1229,9 @@ module scenes {
                 if (event.name === "Lava floor") {
                     createjs.Sound.play("lava");
                     console.log("Booped ground");
-                    this.livesValue--;
+                    livesValue--;
 
-                    if (this.livesValue <= 0) {
+                    if (livesValue <= 0) {
                         //Game over yeaaAAAHHH H H H H HH
                         document.exitPointerLock();
                         this.children = []; //Clean up children objects
@@ -1247,7 +1244,7 @@ module scenes {
                         this.remove(this.ground);
                         this.ground.position.y = -50;
                         this.add(this.ground);
-                        this.livesLabel.text = "LIVES: " + this.livesValue;
+                        this.livesLabel.text = "LIVES: " + livesValue;
                         this.remove(this.player);
                         this.player.position.set(0, 10, 10);
                         this.player.rotation.set(0, 0, 0);
@@ -1410,20 +1407,21 @@ module scenes {
                     this.isGrounded = true;
                 }
                 if (event.name === "Door1") {
+                    
                     createjs.Sound.play("door");
                     console.log("Booped Door 1");
-                    currentScene = config.Scene.OVER;
+                    currentScene = config.Scene.PLAY2;
                     changeScene();
-                    this.scoreValue += this.bonusValue;
-                    this.scoreLabel.text = "Score: " + this.scoreValue;
+                    scoreValue += bonusValue;
+                    this.scoreLabel.text = "Score: " + scoreValue;
 
 
                 }
                 if (event.name === "Coin") {
                     createjs.Sound.play("coin");
                     scene.remove(event);
-                    this.scoreValue += 100;
-                    this.scoreLabel.text = "Score: " + this.scoreValue;
+                    scoreValue += 100;
+                    this.scoreLabel.text = "Score: " + scoreValue;
                 }
             });
 

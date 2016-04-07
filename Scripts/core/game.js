@@ -41,7 +41,12 @@ var scene;
 var currentScene;
 var renderer;
 var camera;
+var scoreValue;
+var livesValue;
+var bonusValue;
+var highestScore;
 var play;
+var play2;
 var menu;
 var over;
 var instructions;
@@ -143,7 +148,7 @@ function changeScene() {
             // show the PLAY scene
             play = new scenes.Play();
             scene = play;
-            console.log("Starting PLAY Scene");
+            console.log("Starting LEVEL 2");
             break;
         case config.Scene.OVER:
             // show the game OVER scene
@@ -157,6 +162,11 @@ function changeScene() {
             scene = instructions;
             console.log("Starting INSTRUCTIONS Scene");
             break;
+        case config.Scene.PLAY2:
+            //Show level 2
+            play2 = new scenes.Play2();
+            scene = play2;
+            console.log("Starting LEVEL 2");
     }
 }
 window.onload = preload;
