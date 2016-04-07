@@ -59,6 +59,7 @@ module scenes {
 
         //Coin
         private coinLoader: any;
+        private coins: Physijs.ConcaveMesh[];
         private coin1: Physijs.ConvexMesh;
         private coin2: Physijs.ConvexMesh;
         private coin3: Physijs.ConvexMesh;
@@ -953,51 +954,63 @@ module scenes {
          */
         private setCoinMesh(): void {
 
-            this.coinLoader = new THREE.JSONLoader().load("../../Assets/Models/coin.json", function(coinGeometry: Geometry): void {
-                this.phongMaterial = new PhongMaterial({ color: 0xE7AB32 });
-                this.phongMaterial.emissive = new THREE.Color(0xE7AB32);
-                this.coinMaterial = Physijs.createMaterial((this.phongMaterial), 0.4, 0.6);
-                this.coin1 = new Physijs.ConvexMesh(this.coinGeometry, this.coinMaterial);
-                this.coin2 = new Physijs.ConvexMesh(this.coinGeometry, this.coinMaterial);
-                this.coin3 = new Physijs.ConvexMesh(this.coinGeometry, this.coinMaterial);
+            var self = this;
+            this.coins = new Array<Physijs.ConvexMesh>(); // Instantiate a convex mesh array
 
-                this.coin1.receiveShadow = true;
-                this.coin1.castShadow = true;
-                this.coin2.receiveShadow = true;
-                this.coin2.castShadow = true;
-                this.coin3.receiveShadow = true;
-                this.coin3.castShadow = true;
-                this.coin1.name = "Coin1";
-                this.coin2.name = "Coin2";
-                this.coin3.name = "Coin3";
+            var coinLoader = new THREE.JSONLoader().load("../../Assets/imported/coin.json", function(geometry: THREE.Geometry) {
+                var phongMaterial = new PhongMaterial({ color: 0xE7AB32 });
+                phongMaterial.emissive = new THREE.Color(0xE7AB32);
 
-                if (this.door1.position.set(60, 5, -51)) {
-                    this.coin1.position.set(60, 5, 50);
-                    this.coin2.position.set(-60, 5, -50);
-                    this.coin3.position.set(-60, 5, 50);
+                this.coinMaterial = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+                for (var count: number = 1; count <= 3; count++) {
+                    self.coins[count] = new Physijs.ConvexMesh(geometry, this.coinMaterial);
+                    self.coins[count].receiveShadow = true;
+                    self.coins[count].castShadow = true;
+                    self.coins[count].name = "Coin";
+                    console.log("Added Coin " + count + " to the Scene");
                 }
-                if (this.door1.position.set(-60, 5, -51)) {
-                    this.coin1.position.set(60, 5, -50);
-                    this.coin2.position.set(60, 5, 50);
-                    this.coin3.position.set(-60, 5, 50);
+
+                if (self.door1.position.set(60, 5, -51)) {
+                    self.coins[1].position.set(60, 5, 50);
+                    self.coins[2].position.set(-60, 5, -50);
+                    self.coins[3].position.set(-60, 5, 50);
                 }
-                if (this.door1.position.set(60, 5, 51)) {
-                    this.coin1.position.set(60, 5, -50);
-                    this.coin2.position.set(-60, 5, -50);
-                    this.coin3.position.set(-60, 5, 50);
+                if (self.door1.position.set(-60, 5, -51)) {
+                    self.coins[1].position.set(60, 5, -50);
+                    self.coins[2].position.set(60, 5, 50);
+                    self.coins[3].position.set(-60, 5, 50);
                 }
-                if (this.door1.position.set(-60, 5, 51)) {
-                    this.coin1.position.set(60, 5, -50);
-                    this.coin2.position.set(-60, 5, -50);
-                    this.coin3.position.set(60, 5, 50);
+                if (self.door1.position.set(60, 5, 51)) {
+                    self.coins[1].position.set(60, 5, -50);
+                    self.coins[2].position.set(-60, 5, -50);
+                    self.coins[3].position.set(-60, 5, 50);
                 }
-                this.add(this.coin1);
-                this.add(this.coin2);
-                this.add(this.coin3);
+                if (self.door1.position.set(-60, 5, 51)) {
+                    self.coins[1].position.set(60, 5, -50);
+                    self.coins[2].position.set(-60, 5, -50);
+                    self.coins[3].position.set(60, 5, 50);
+                }
+                self.add(self.coins[1]);
+                self.add(self.coins[2]);
+                self.add(self.coins[3]);
                 console.log("Added coins");
             }
             );
         }
+
+        /**
+       * This method randomly sets the coin object's position
+       * 
+       * @method setCoinPosition
+       * @return void
+       */
+        private setCoinPosition(coin: Physijs.ConvexMesh): void {
+            var randomPointX: number = Math.floor(Math.random() * 20) - 10;
+            var randomPointZ: number = Math.floor(Math.random() * 20) - 10;
+            coin.position.set(randomPointX, 10, randomPointZ);
+            this.add(coin);
+        }
+
 
         /**
          * Event Handler method for any pointerLockChange events
@@ -1089,11 +1102,13 @@ module scenes {
                     }
                     if (this.keyboardControls.jump) {
                         this.velocity.y += 4000.0 * delta;
-                        if (this.player.position.y > 10) {
+                        if (this.player.position.y > 5) {
                             this.isGrounded = false;
                             createjs.Sound.play("jump");
                         }
-
+                    if (this.player.position.y < 0) {
+                        this.isGrounded = false;
+                    }
                     }
 
                     this.player.setDamping(0.7, 0.1);
@@ -1202,6 +1217,15 @@ module scenes {
 
             // Collision Check
 
+            // Collision check for Lava floor
+            this.ground.addEventListener('collision', function(otherObject) {
+
+                // if a coin falls off the ground, reset
+                if (otherObject.name === "Coin") {
+                    this.remove(otherObject);
+                    this.setCoinPosition(otherObject);
+                }
+            });
 
             this.player.addEventListener('collision', (event) => {
                 console.log(event);
@@ -1395,19 +1419,7 @@ module scenes {
 
 
                 }
-                if (event.name === "Coin1") {
-                    createjs.Sound.play("coin");
-                    scene.remove(event);
-                    this.scoreValue += 100;
-                    this.scoreLabel.text = "Score: " + this.scoreValue;
-                }
-                if (event.name === "Coin2") {
-                    createjs.Sound.play("coin");
-                    scene.remove(event);
-                    this.scoreValue += 100;
-                    this.scoreLabel.text = "Score: " + this.scoreValue;
-                }
-                if (event.name === "Coin3") {
+                if (event.name === "Coin") {
                     createjs.Sound.play("coin");
                     scene.remove(event);
                     this.scoreValue += 100;
