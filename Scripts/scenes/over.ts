@@ -1,3 +1,9 @@
+//Source file name: over.ts
+//Authors: Angelina Gutierrez and Elaine Mae Villarino
+//Last modified by: 
+//Date last modified: 
+//Program description: Creates the Game Over scene
+
 /**
  * @module scenes
  */

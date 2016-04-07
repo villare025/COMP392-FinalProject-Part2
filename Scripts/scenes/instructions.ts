@@ -1,3 +1,9 @@
+//Source file name: instructions.ts
+//Authors: Angelina Gutierrez and Elaine Mae Villarino
+//Last modified by: Angelina Gutierrez
+//Date last modified: April 06, 2016
+//Program description: Creates the instructions scene
+
 module scenes {
     /**
      * The Instruction scene extends scene.Scene superclass is used to

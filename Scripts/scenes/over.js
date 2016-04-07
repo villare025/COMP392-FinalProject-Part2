@@ -1,3 +1,8 @@
+//Source file name: over.ts
+//Authors: Angelina Gutierrez and Elaine Mae Villarino
+//Last modified by: 
+//Date last modified: 
+//Program description: Creates the Game Over scene
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

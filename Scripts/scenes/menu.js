@@ -1,3 +1,8 @@
+//Source file name: menu.ts
+//Authors: Angelina Gutierrez and Elaine Mae Villarino
+//Last modified by: Angelina Gutierrez
+//Date last modified: April 06, 2016
+//Program description: Creates the menu scene
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

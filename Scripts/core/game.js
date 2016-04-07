@@ -1,5 +1,10 @@
 /// <reference path="_reference.ts"/>
 // MAIN GAME FILE
+//Source file name: game.ts
+//Authors: Angelina Gutierrez and Elaine Mae Villarino
+//Last modified by: Angelina Gutierrez
+//Date last modified: April 06, 2016
+//Program description: Creates and changes scenes for the game
 // THREEJS Aliases
 var Scene = Physijs.Scene;
 var Renderer = THREE.WebGLRenderer;
@@ -48,6 +53,7 @@ var manifest = [
     { id: "hit", src: "../../Assets/audio/hit.wav" },
     { id: "coin", src: "../../Assets/audio/coin.mp3" },
     { id: "jump", src: "../../Assets/audio/Jump.wav" },
+    { id: "door", src: "../../Assets/audio/doorUnlock.mp3" },
     { id: "StartButton", src: "../../Assets/images/StartButton.png" },
     { id: "RestartButton", src: "../../Assets/images/RestartButton.png" },
     { id: "InstructionsButton", src: "../../Assets/images/InstructionsButton.png" },
