@@ -1,3 +1,8 @@
+//Source file name: play.ts
+//Authors: Angelina Gutierrez and Elaine Mae Villarino
+//Last modified by: Angelina Gutierrez
+//Date last modified: April 06, 2016
+//Program description: Creates the first level of the game
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -747,24 +752,20 @@ var scenes;
                 if (this.isGrounded) {
                     var direction = new Vector3(0, 0, 0);
                     if (this.keyboardControls.moveForward) {
-                        createjs.Sound.play("walk", 0, 0, 0, 0, 0.25);
                         this.velocity.z -= 400.0 * delta;
                     }
                     if (this.keyboardControls.moveLeft) {
-                        createjs.Sound.play("walk", 0, 0, 0, 0, 0.25);
                         this.velocity.x -= 400.0 * delta;
                     }
                     if (this.keyboardControls.moveBackward) {
-                        createjs.Sound.play("walk", 0, 0, 0, 0, 0.25);
                         this.velocity.z += 400.0 * delta;
                     }
                     if (this.keyboardControls.moveRight) {
-                        createjs.Sound.play("walk", 0, 0, 0, 0, 0.25);
                         this.velocity.x += 400.0 * delta;
                     }
                     if (this.keyboardControls.jump) {
                         this.velocity.y += 4000.0 * delta;
-                        if (this.player.position.y > 10) {
+                        if (this.player.position.y > 100) {
                             this.isGrounded = false;
                             createjs.Sound.play("jump");
                         }
@@ -848,30 +849,25 @@ var scenes;
             // Collision Check
             this.player.addEventListener('collision', function (event) {
                 console.log(event);
-                if (event.name === "Ground") {
+                if (event.name === "Lava floor") {
                     createjs.Sound.play("lava");
                     console.log("Booped ground");
-                    _this.livesValue--;
-                    _this.livesLabel.text = "Lives: " + _this.livesValue;
-                    document.exitPointerLock();
-                    _this.keyboardControls.enabled = false;
-                    _this.mouseControls.enabled = false;
-                    _this.blocker.style.display = '-webkit-box';
-                    _this.blocker.style.display = '-moz-box';
-                    _this.blocker.style.display = 'box';
-                    _this.instructions.style.display = '';
-                    console.log("PointerLock disabled");
-                    _this.scoreValue = 0;
-                    _this.bonusValue = 9999;
-                    _this.scoreLabel.text = "Score: " + _this.scoreValue;
-                    _this.bonusLabel.text = "Bonus: " + _this.bonusValue;
-                    if (_this.livesValue == 1) {
-                        //window.location.reload(true); // Force reload browser
-                        _this.livesValue = 6;
+                    if (_this.livesValue <= 0) {
+                        //Game over yeaaAAAHHH H H H H HH
+                        document.exitPointerLock();
+                        _this.children = []; //Clean up children objects
+                        console.log(_this);
+                        currentScene = config.Scene.OVER;
+                        changeScene();
                     }
-                    scene.remove(_this.player);
-                    _this.player.position.set(0, 10, 10);
-                    _this.add(_this.player);
+                    else {
+                        //Reset player, update lives
+                        _this.livesValue--;
+                        _this.livesLabel.text = "LIVES: " + _this.livesValue;
+                        _this.remove(_this.player);
+                        _this.player.position.set(0, 10, 10);
+                        _this.add(_this.player);
+                    }
                 }
                 if (event.name === "Road1") {
                     createjs.Sound.play("walk");
@@ -1026,27 +1022,9 @@ var scenes;
                 if (event.name === "Door1") {
                     createjs.Sound.play("door");
                     console.log("Booped Door 1");
+                    currentScene = config.Scene.OVER;
+                    changeScene();
                     _this.scoreValue += _this.bonusValue;
-                    _this.scoreLabel.text = "Score: " + _this.scoreValue;
-                    _this.bonusValue = 9999;
-                    _this.bonusLabel.text = "Bonus: " + _this.bonusValue;
-                    _this.keyboardControls.enabled = false;
-                    _this.mouseControls.enabled = false;
-                    _this.blocker.style.display = '-webkit-box';
-                    _this.blocker.style.display = '-moz-box';
-                    _this.blocker.style.display = 'box';
-                    _this.instructions.style.display = '';
-                    console.log("PointerLock disabled");
-                    scene.remove(_this.player);
-                    scene.remove(_this.door1);
-                    _this.setDoor();
-                    _this.add(_this.door1);
-                    _this.player.position.set(0, 10, 10);
-                    _this.add(_this.player);
-                    _this.add(_this.coin1);
-                    _this.add(_this.coin2);
-                    _this.add(_this.coin3);
-                    _this.scoreValue = 0;
                     _this.scoreLabel.text = "Score: " + _this.scoreValue;
                 }
                 if (event.name === "Coin1") {
@@ -1068,31 +1046,6 @@ var scenes;
                     _this.scoreLabel.text = "Score: " + _this.scoreValue;
                 }
             });
-            this.player.addEventListener('collision', function (eventObject) {
-                if (eventObject.name === "Ground") {
-                    this.this.isGrounded = true;
-                    createjs.Sound.play("land");
-                }
-                if (eventObject.name === "DeathPlane") {
-                    createjs.Sound.play("hit");
-                    this.livesValue--;
-                    if (this.livesValue <= 0) {
-                        //Game over yeaaAAAHHH H H H H HH
-                        document.exitPointerLock();
-                        this.children = []; //Clean up children objects
-                        console.log(this);
-                        currentScene = config.Scene.OVER;
-                        changeScene();
-                    }
-                    else {
-                        //Reset player, update lives
-                        this.livesLabel.text = "LIVES: " + this.livesValue;
-                        this.remove(this.player);
-                        this.player.position.set(0, 30, 10);
-                        this.add(this.player);
-                    }
-                }
-            }.bind(this));
             // create parent-child relationship with camera and player
             this.player.add(camera);
             camera.rotation.set(0, 0, 0);
