@@ -3,7 +3,7 @@
 //Source file name: game.ts
 //Authors: Angelina Gutierrez and Elaine Mae Villarino
 //Last modified by: Angelina Gutierrez
-//Date last modified: April 06, 2016
+//Date last modified: April 07, 2016
 //Program description: Creates and changes scenes for the game
 // THREEJS Aliases
 var Scene = Physijs.Scene;
@@ -131,7 +131,7 @@ function setupRenderer() {
 // Setup main camera for the scene
 function setupCamera() {
     camera = new PerspectiveCamera(35, config.Screen.RATIO, 0.1, 1000);
-    //camera.position.set(0, 10, 30);
+    //camera.position.set(0, 100, 100);
     //camera.lookAt(new Vector3(0, 0, 0));
     console.log("Finished setting up Camera...");
 }

@@ -1,7 +1,7 @@
 //Source file name: play.ts
 //Authors: Angelina Gutierrez and Elaine Mae Villarino
 //Last modified by: Angelina Gutierrez
-//Date last modified: April 06, 2016
+//Date last modified: April 07, 2016
 //Program description: Creates the first level of the game
 
 /**
@@ -1214,16 +1214,6 @@ module scenes {
 
             // Collision Check
 
-            // Collision check for Lava floor
-            this.ground.addEventListener('collision', function(otherObject) {
-
-                // if a coin falls off the ground, reset
-                if (otherObject.name === "Coin") {
-                    this.remove(otherObject);
-                    this.setCoinPosition(otherObject);
-                }
-            });
-
             this.player.addEventListener('collision', (event) => {
                 console.log(event);
                 if (event.name === "Lava floor") {
@@ -1241,9 +1231,7 @@ module scenes {
                     }
                     else {
                         //Reset player, update lives
-                        this.remove(this.ground);
-                        this.ground.position.y = -50;
-                        this.add(this.ground);
+
                         this.livesLabel.text = "LIVES: " + livesValue;
                         this.remove(this.player);
                         this.player.position.set(0, 10, 10);
@@ -1407,7 +1395,7 @@ module scenes {
                     this.isGrounded = true;
                 }
                 if (event.name === "Door1") {
-                    
+
                     createjs.Sound.play("door");
                     console.log("Booped Door 1");
                     currentScene = config.Scene.PLAY2;

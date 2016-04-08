@@ -1,7 +1,7 @@
 //Source file name: play.ts
 //Authors: Angelina Gutierrez and Elaine Mae Villarino
 //Last modified by: Angelina Gutierrez
-//Date last modified: April 06, 2016
+//Date last modified: April 07, 2016
 //Program description: Creates the first level of the game
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -861,14 +861,6 @@ var scenes;
             this.setCoinMesh();
             createjs.Sound.play("muse", 0, 0, 0, -1, 1);
             // Collision Check
-            // Collision check for Lava floor
-            this.ground.addEventListener('collision', function (otherObject) {
-                // if a coin falls off the ground, reset
-                if (otherObject.name === "Coin") {
-                    this.remove(otherObject);
-                    this.setCoinPosition(otherObject);
-                }
-            });
             this.player.addEventListener('collision', function (event) {
                 console.log(event);
                 if (event.name === "Lava floor") {
@@ -885,9 +877,6 @@ var scenes;
                     }
                     else {
                         //Reset player, update lives
-                        _this.remove(_this.ground);
-                        _this.ground.position.y = -50;
-                        _this.add(_this.ground);
                         _this.livesLabel.text = "LIVES: " + livesValue;
                         _this.remove(_this.player);
                         _this.player.position.set(0, 10, 10);
